@@ -3,7 +3,6 @@
     <h1> {{compData.campaign_name}} </h1>
     <p> {{compData.campaign_desc}} </P>
     <p> {{compData.member_name}} </P>
-    <p> {{name}} </P>
   <b/> <b/>
   <textarea rows="4" cols="60" placeholder="Add call notes here..."></textarea>
   <p/>
@@ -21,7 +20,6 @@ export default {
   data: function() {
     return {
       compData: this.member,
-      name:"fred"
     }
   },
   methods: {
