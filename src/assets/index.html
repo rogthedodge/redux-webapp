@@ -1,0 +1,66 @@
+<!-- DOCTYPE HTML -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>redux app</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script>
+      $.urlParam = function(name){
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results==null){
+          return null;
+        }
+        else{
+          return results[1] || 0;
+        }
+      }
+    </script>
+    <script>
+      function answered() {
+        notes = document.getElementById("notes").innerHTML;
+        if (notes.includes("Record the outcome by editing this text...")) {
+          notes = " ";
+        }
+        $.post( "http://localhost:8080/call/", {person_id: person_id, campaign_id: campaign_id,
+          outcome: "ANSWERED", notes: notes, date: "2011-05-16 15:36:38"});
+        window.location.reload()
+        }
+    </script>
+  </head>
+
+  <body>
+    <style>
+      .editable {
+        border: 1px inset #aaa;
+        height: 200px;
+        width: 1000;
+        margin: 5px;
+        padding: 2px;
+        cursor: text;
+        }
+      </style>
+    <div id='call_details' class = non-editable></div>
+    <script>
+      var campaign_name = $.urlParam('campaign');
+      var call_url = 'http://localhost:8080/call-member/' + campaign_name;
+      var member_id, campaign_id, outcome, notes, date
+      $.get(call_url, function(data){
+        member_id = data.member_id;
+        campaign_id = data.campaign_id;
+        document.getElementById("call_details").innerHTML =
+        '<br>' + data.member_name + '<br>' + data.member_tel +
+        '<br><br>' + data.campaign_name + '<br>' + data.campaign_desc + '<br>' +
+        data.campaign_date + '<br>' + '<br><br>';
+        }, "json");
+         name;
+    </script>
+    <div id='notes' class='editable' contenteditable='true'>
+          Record the outcome by editing this text...
+        </p>
+    </div>
+    <button onclick="answered()">Answered</button>
+    <input type="button" value="Unanswered" onClick="window.location.reload()">
+    <input type="button" value="Skip to next call" onClick="window.location.reload()">
+  </body>
+
+</html>
