@@ -77,15 +77,16 @@ export default {
     this.appData.showCallButton = true
   },
   onCallButtonClicked: function (event) {
-    fetch('http://localhost:8000/call-member/'+this.appData.campaign.campaign_name)
+    fetch('http://localhost:8000/call-member/'+this.appData.campaign.campaign_name
+      +"/"+0)
       .then((response) => { return response.json() })
-      .then((data) => { this.appData.member = data
-      }).catch(error => { console.log(error) });
+      .then((data) => { this.appData.member = data;
       this.appData.showCLPs = false;
       this.appData.showCampaigns=false;
       this.appData.showCampaignSummary=false;
       this.appData.showCallButton = false;
       this.appData.showMemberCallPage = true
+      }).catch(error => { console.log(error) });
     }
   }
 }

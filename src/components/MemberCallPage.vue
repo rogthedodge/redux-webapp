@@ -2,8 +2,11 @@
   <div>
     <h1> {{compData.campaign_name}} </h1>
     <p> {{compData.campaign_desc}} </P>
-    <p> {{compData.member_name}} </P>
-  <b/> <b/>
+    <b/>
+    <p> Member to call: {{compData.member_name}} </P>
+    <p> Telephone: {{compData.member_tel}} </p>
+    <p> {{compData.member_id}} </p>
+  <b/>
   <textarea rows="4" cols="60" placeholder="Add call notes here..."></textarea>
   <p/>
   <button v-on:click="onAnsweredClicked"> SUBMIT Call Details </button>
@@ -13,7 +16,7 @@
 </template>
 
 <script>
-var compvData = new Object();
+var compData = new Object();
 
 export default {
   props: ['member'],
@@ -25,9 +28,11 @@ export default {
   methods: {
   onSkipClicked: function (event) {
     console.log(this.compData)
-    fetch('http://localhost:8000/call-member/'+this.member.campaign_name)
+    fetch('http://localhost:8000/call-member/'+this.member.campaign_name+"/"+
+      this.compData.member_id)
       .then((response) => { return response.json() })
-      .then((data) => { this.compData = data
+      .then((data) => { this.compData = data;
+        if (data === null) {console.log('yay')}
       }).catch(error => { console.log(error) })
     },
   onUnansweredClicked: function (event) {
